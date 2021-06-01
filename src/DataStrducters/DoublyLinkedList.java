@@ -3,9 +3,9 @@ package DataStrducters;
 import enums.SearchType;
 import models.Contact;
 
-public class DoubluLinkedList {
-    Node head, tail;
-    int size = 0;
+public class DoublyLinkedList {
+    public Node head, tail;
+    public int size = 0;
 
     public void add(Node node) {
 
@@ -15,8 +15,8 @@ public class DoubluLinkedList {
             return;
         }
 
-        tail.next = node;
-        node.previous = tail;
+        tail.setNext(node);
+        node.setPrevious(tail);
         tail = node;
         size++;
 
@@ -25,47 +25,47 @@ public class DoubluLinkedList {
     public void remove(Node nodeToDelet) {
 
         if (nodeToDelet == head) {
-            head.next.previous = null;
-            head = head.next;
+            head.getNext().setPrevious(null);
+            head = head.getNext();
             return;
         }
 
         if (nodeToDelet == tail) {
-            tail.previous.next = null;
-            tail.previous = tail;
+            tail.getPrevious().setNext(null);
+            tail.setPrevious(tail);
             return;
         }
 
         Node node = searchWith(SearchType.node, nodeToDelet);
-        node.previous.next = node.next;
-        node.next.previous = node.previous;
+        node.getPrevious().setNext(node.getNext());
+        node.getNext().setPrevious(node.getPrevious());
 
     }
 
     public Node searchWith(SearchType type, Object data) {
 
         if (type == SearchType.name) {
-            for (Node node = head; node != null; node = node.next) {
+            for (Node node = head; node != null; node = node.getNext()) {
                 Contact contact = (Contact) node.data;
                 if (contact.getName() == (String) data) {
                     return node;
                 }
             }
         } else if (type == SearchType.phNumber) {
-            for (Node node = head; node != null; node = node.next) {
+            for (Node node = head; node != null; node = node.getNext()) {
                 Contact contact = (Contact) node.data;
                 if (contact.getPhNumber() == (String) data) {
                     return node;
                 }
             }
         } else if (type == SearchType.node) {
-            for (Node node = head; node != null; node = node.next) {
+            for (Node node = head; node != null; node = node.getNext()) {
                 if (node == (Node) data) {
                     return node;
                 }
             }
         } else if (type == SearchType.contact) {
-            for (Node node = head; node != null; node = node.next) {
+            for (Node node = head; node != null; node = node.getNext()) {
                 if (node.data == (Contact) data) {
                     return node;
                 }
@@ -82,9 +82,9 @@ public class DoubluLinkedList {
     }
 
     public void sort() {
-        for (Node node = head; node != null; node = node.next) {
+        for (Node node = head; node != null; node = node.getNext()) {
 
-            for (Node node2 = node.next; node2 != null; node2 = node2.next) {
+            for (Node node2 = node.getNext(); node2 != null; node2 = node2.getNext()) {
 
                 Contact nodeContact = (Contact) node.data;
                 Contact node2Contact = (Contact) node2.data;
@@ -108,7 +108,7 @@ public class DoubluLinkedList {
     @Override
     public String toString() {
         String ret = "";
-        for (Node node = head; node != null; node = node.next) {
+        for (Node node = head; node != null; node = node.getNext()) {
             ret += node + "\n";
         }
         return ret;
